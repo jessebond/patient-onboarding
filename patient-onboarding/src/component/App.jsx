@@ -5,6 +5,10 @@ import StepPersonal from './StepPersonal'
 class App extends Component {
   constructor(props){
     super(props)
+
+    this.state = {
+      state: null
+    }
   }
 
   render() {
@@ -13,7 +17,7 @@ class App extends Component {
         <div className="nav">
           <h2>CompanyName Patient Signup</h2>
         </div>
-        {this.props.children || <StepPersonal />}
+        {this.props.children}
       </div>
     )
   }

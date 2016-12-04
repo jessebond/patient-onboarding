@@ -1,39 +1,36 @@
+import AppActions, {APP_EVENT, APP_ACTIONS} from '../actions/AppActions'
 
-class AppStoreClass {
+export class AppStoreClass {
+  static StoreUpdate = 'StoreUpdate'
+
   constructor(){
     this.state = {
       personal: {
-        email: {
-          value: '',
-          valid: false,
-          error: ''
-        },
-        password: {
-          value: '',
-          valid: false,
-          error: ''
-        },
-        firstName: {
-          value: '',
-          valid: false,
-          error: ''
-        },
-        lastName: {
-          value: '',
-          valid: false,
-          error: ''
-        },
-        dob: {
-          value: '',
-          valid: false,
-          error: ''
-        },
-        phoneNumber: {
-          value: '',
-          valid: false,
-          error: ''
-        }
+        email: this.getDefaultField(),
+        password: this.getDefaultField(),
+        firstName: this.getDefaultField(),
+        lastName: this.getDefaultField(),
+        dob: this.getDefaultField(),
+        phoneNumber: this.getDefaultField()
       }
+    }
+
+    window.addEventListener(APP_EVENT, this.handleEvent)
+  }
+
+  handleEvent(e){
+    const data = e.data
+    switch(data.action){
+      case APP_ACTIONS.UPDATE_PERSONAL_FIELD:
+        this.updatePersonalField(data.field, data.value)
+    }
+  }
+
+  getDefaultField(){
+    return {
+      value: '',
+      valid: false,
+      error: ''
     }
   }
 
@@ -41,12 +38,16 @@ class AppStoreClass {
     let field = Object.assign({}, this.state.personal[fieldname])
     field.value = value
     this.state.personal[fieldname] = InformationValidator.validateField(fieldname, field)
-
+    console.log(fieldname, field)
     this.onUpdate()
   }
 
+  getState(){
+    return this.state
+  }
+
   onUpdate() {
-    window.dispatchEvent(new Event('storeUpdate'))
+    window.dispatchEvent(new Event(AppStoreClass.StoreUpdate))
   }
 }
 
@@ -54,11 +55,10 @@ let AppStore = new AppStoreClass()
 export default AppStore
 
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-const PASSWORD_REGEX = /^.*$/
+const PASSWORD_REGEX = /^[\w!@#$%^&\*\(\)\-_=+]{10,}$/
 const NAME_REGEX = /^[a-zA-Z0-9]+$/
 const DOB_REGEX = /^(\d{2})\/(\d{2})\/(\d{4})$/
-const PHONE_NUMBER_REGEX = /^.*$/
-const CURRENT_YEAR = 2016
+const PHONE_NUMBER_REGEX = /^(1[-\. ])?\(?\d{3}\)?[-\. ]?\d{3}[-\. ]?\d{4}$/
 
 class InformationValidator {
   static validateField(fieldname, field){
@@ -82,33 +82,59 @@ class InformationValidator {
 
   static validateEmail(field){
     field.valid = EMAIL_REGEX.test(field.value)
-    if(!field.valid){
-      field.error = "Invalid email"
-    }
+    field.error = field.valid ? null : "Invalid email"
     
     return field
   }
 
   static validatePassword(field){
-    field.valid = PASSWORD_REGEX.test(field.value)
-    if(!field.valid){
-      field.error = "bad pass"
+    if(field.value.length < 10){
+      field.error = "Password must be atleast 10 characters"
+      field.info = "Password strength: Weak"
+      field.valid = false
+      return field
     }
+    if(!PASSWORD_REGEX.test(field.value)){
+      field.error = "Password must be atleast 10 characters"
+      field.valid = false
+      field.info = "Password strength: Weak"
+
+      return field
+    }
+
+    const hasLetter = /[a-zA-Z]+/.test(field.value)
+    const hasNumber = /\d+/.test(field.value)
+    const hasSymbol = /[!@#$%^&\*\(\)\-_=+]+/.test(field.value)
+    if(hasLetter && hasNumber && hasSymbol){
+      field.info = "Password strength: Strong"
+      field.valid = true
+      field.error = null
+      return field
+    }
+
+    if((hasLetter && hasNumber) || (hasLetter && hasSymbol) || (hasNumber || hasSymbol)){
+      field.info = "Password strength: Medium"
+      field.valid = true
+      field.error = null
+      return field
+    }
+
+    field.valid = false
+    field.error = "Password too weak. Try adding aleast one number or a symbol"
+    field.info = "Password strength: Weak"
     
     return field
   }
 
   static validateName(field){
     field.valid = NAME_REGEX.test(field.value)
-    if(!field.valid){
-      field.error = "bad pass"
-    }
+    field.error = field.valid ? null : "Invalid name"
     
     return field
   }
 
   static validateDoB(field){    
-    if(DOB_REGEX.test(field.value)){
+    if(!DOB_REGEX.test(field.value)){
       field.valid = false
       field.error = 'Bad date of birth'
 
@@ -116,7 +142,9 @@ class InformationValidator {
     }
 
     let dob = new Date(field.value.replace(DOB_REGEX, '$3-$2-$1'));
-    let ageInYears = (Date.now() - dob.getTime()) / 1000 / 60 / 60 / 24 /365
+    const age = Date.now() - dob.getTime()
+    const ageInYears = age / 1000 / 60 / 60 / 24 /365
+    console.log('age', age, ageInYears)
     if(ageInYears < 18){
       field.valid = false
       field.error = 'You must be age 18 or older'
@@ -125,14 +153,13 @@ class InformationValidator {
     }
 
     field.valid = true
+    field.error = null
     return field
   }
 
   static validatePhoneNumber(field){
     field.valid = PHONE_NUMBER_REGEX.test(field.value)
-    if(!field.valid){
-      field.error = "Invalid phone number"
-    }
+    field.error = field.valid ? null : "Invalid phone number"
     
     return field
   }

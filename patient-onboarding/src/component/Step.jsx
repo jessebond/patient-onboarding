@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import AppStore, {AppStoreClass} from '../store/AppStore'
 
 export const StepConst = {
   PERSONAL: 0,
@@ -13,14 +14,34 @@ export const StepConst = {
 class Step extends Component {
   constructor(props){
     super(props)
+
+    this.onStoreUpdate = this.onStoreUpdate.bind(this)
+    this.state = {
+      data: AppStore.getState()
+    }
+    this.renderBody = this.renderBody.bind(this)
+    this.renderFooter = this.renderFooter.bind(this)
+  }
+
+  componentWillMount(){
+    window.addEventListener(AppStoreClass.StoreUpdate, this.onStoreUpdate)
+  }
+
+  componentWillUnMount(){
+    window.removeEventListener(AppStoreClass.StoreUpdate, this.onStoreUpdate)
+  }
+
+  onStoreUpdate(){
+    this.setState({data: AppStore.getState()})
   }
 
   renderBody() { return null }
-  validate() { return true }
+  renderFooter() { return null }
 
   render(){
     return <div className="step-wrapper">
       {this.renderBody()}
+      {this.renderFooter()}
     </div>
   }
 }
