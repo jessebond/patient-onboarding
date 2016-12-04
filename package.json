@@ -1,0 +1,24 @@
+{
+  "name": "react-patient-onboarding",
+  "version": "1.0.0",
+  "description": "Single page react app for a patient onboarding flow",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jessebond/react-patient-onboarding.git"
+  },
+  "keywords": [
+    "react",
+    "onboarding",
+    "patient"
+  ],
+  "author": "Jesse Bond",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jessebond/react-patient-onboarding/issues"
+  },
+  "homepage": "https://github.com/jessebond/react-patient-onboarding#readme"
+}
