@@ -58,6 +58,7 @@ const PASSWORD_REGEX = /^.*$/
 const NAME_REGEX = /^[a-zA-Z0-9]+$/
 const DOB_REGEX = /^(\d{2})\/(\d{2})\/(\d{4})$/
 const PHONE_NUMBER_REGEX = /^.*$/
+const CURRENT_YEAR = 2016
 
 class InformationValidator {
   static validateField(fieldname, field){
@@ -106,19 +107,31 @@ class InformationValidator {
     return field
   }
 
-  static validateDoB(field){
-    field.valid = DOB_REGEX.test(field.value)
-    if(!field.valid){
-      field.error = "bad pass"
+  static validateDoB(field){    
+    if(DOB_REGEX.test(field.value)){
+      field.valid = false
+      field.error = 'Bad date of birth'
+
+      return field
     }
-    
+
+    let dob = new Date(field.value.replace(DOB_REGEX, '$3-$2-$1'));
+    let ageInYears = (Date.now() - dob.getTime()) / 1000 / 60 / 60 / 24 /365
+    if(ageInYears < 18){
+      field.valid = false
+      field.error = 'You must be age 18 or older'
+
+      return field
+    }
+
+    field.valid = true
     return field
   }
 
   static validatePhoneNumber(field){
     field.valid = PHONE_NUMBER_REGEX.test(field.value)
     if(!field.valid){
-      field.error = "bad pass"
+      field.error = "Invalid phone number"
     }
     
     return field

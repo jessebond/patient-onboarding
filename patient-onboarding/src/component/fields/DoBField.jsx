@@ -11,24 +11,7 @@ class DoBField extends TextField {
       value = value.substring(0, value.length -1)
     }
 
-    this.setState({
-      value: value,
-      valid: valid
-    })
-
-    this.props.onUpdate(valid ? value : null)
-  }
-
-  validate(value){
-    const matches = value.match(this.props.regex)
-
-    if(matches.length < 4){
-      return false
-    }
-
-    if(matches[1]
-
-    return true
+    this.props.onUpdate(value)
   }
 }
 
