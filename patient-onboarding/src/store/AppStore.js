@@ -1,5 +1,7 @@
 import { HistoryOptions } from '../component/fields/HistorySelection'
 import { GoalOptions } from '../component/fields/GoalSelect'
+import { DoctorOptions } from '../component/fields/DoctorSelect'
+import { InsuranceOptions } from '../component/fields/InsuranceSelect'
 
 export const Steps = {
   PERSONAL: 0,
@@ -31,9 +33,9 @@ export class AppStoreClass {
         looseTeeth: HistoryOptions.NO,
         decayingTeeth: HistoryOptions.NO,
       },
-      goals: GoalOptions.NONE,
-      doctor: {},
-      insurance: {}
+      goal: GoalOptions.NONE,
+      doctor: DoctorOptions.NONE,
+      insurance: InsuranceOptions.NONE
     }
   }
 
@@ -78,6 +80,16 @@ export class AppStoreClass {
 
   updateGoal(value){
     this.state.goal = value
+    this.onUpdate()
+  }
+
+  updateDoctor(value){
+    this.state.doctor = value
+    this.onUpdate()
+  }
+
+  updateInsurance(value){
+    this.state.insurance = value
     this.onUpdate()
   }
 

@@ -20,10 +20,11 @@ export default class GoalSelection extends Component {
   }
 
   render(){
+    const selected = this.props.selected
     return <ul>
       <li onClick={this.handleClick.bind(this, GoalOptions.MINOR)}>
         <img src=""/>
-        <p>Fix minor crowding</p>
+        <p>Fix minor crowding{}</p>
       </li>
       <li onClick={this.handleClick.bind(this, GoalOptions.MODERATE)}>
         <img src=""/>
@@ -33,6 +34,7 @@ export default class GoalSelection extends Component {
         <img src=""/>
         <p>Fix major crowding</p>
       </li>
+      <li>{selected}</li>
     </ul>
   }
 }

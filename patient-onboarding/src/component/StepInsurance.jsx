@@ -1,15 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router'
 import Step from './Step'
+import InsuranceSelect from './fields/InsuranceSelect'
 
 class StepInsurance extends Step {
-
-
   renderBody() {
     return <div>
       <h1>Insurance Information</h1>
-      <div>
-      </div>
+      <InsuranceSelect selection={this.props.data} />
     </div>
   }
 }

@@ -41,7 +41,7 @@ class App extends Component {
       case Steps.HISTORY:
         return <StepHistory data={this.state.history} />
       case Steps.GOALS:
-        return <StepGoals data={this.state.goals} />
+        return <StepGoals data={this.state.goal} />
       case Steps.DOCTOR:
         return <StepDoctor data={this.state.doctor} />
       case Steps.INSURANCE:
