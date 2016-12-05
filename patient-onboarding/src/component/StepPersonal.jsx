@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router'
 import Step from './Step'
 import AppStore from '../store/AppStore'
 
@@ -35,7 +34,6 @@ class StepPersonal extends Step {
 
   renderBody() {
     const personal = this.props.data
-    console.log('props', this.props)
 
     return <div>
       <h1>Personal Information</h1>

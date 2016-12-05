@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router'
 import Step from './Step'
 import InsuranceSelect from './fields/InsuranceSelect'
 

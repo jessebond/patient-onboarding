@@ -32,7 +32,6 @@ class App extends Component {
   }
 
   renderStep(){
-    console.log('state', this.state)
     switch(this.state.step){
       case Steps.PERSONAL:
         return <StepPersonal data={this.state.personal} />

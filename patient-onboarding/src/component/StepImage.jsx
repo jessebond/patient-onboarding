@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router'
 import Step from './Step'
 import ImageUploader from './ImageUploader'
 import AppStore from '../store/AppStore'
