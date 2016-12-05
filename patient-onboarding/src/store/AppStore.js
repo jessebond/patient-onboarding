@@ -1,10 +1,21 @@
-import AppActions, {APP_EVENT, APP_ACTIONS} from '../actions/AppActions'
+import { HistoryOptions } from '../component/fields/HistorySelection'
+import { GoalOptions } from '../component/fields/GoalSelect'
+
+export const Steps = {
+  PERSONAL: 0,
+  IMAGE: 1,
+  HISTORY: 2,
+  GOALS: 3,
+  DOCTOR: 4,
+  INSURANCE: 5,
+  SUBMIT: 6
+}
 
 export class AppStoreClass {
-  static StoreUpdate = 'StoreUpdate'
-
   constructor(){
+    console.log('steps', Steps)
     this.state = {
+      step: Steps.PERSONAL,
       personal: {
         email: this.getDefaultField(),
         password: this.getDefaultField(),
@@ -12,17 +23,17 @@ export class AppStoreClass {
         lastName: this.getDefaultField(),
         dob: this.getDefaultField(),
         phoneNumber: this.getDefaultField()
-      }
-    }
-
-    window.addEventListener(APP_EVENT, this.handleEvent)
-  }
-
-  handleEvent(e){
-    const data = e.data
-    switch(data.action){
-      case APP_ACTIONS.UPDATE_PERSONAL_FIELD:
-        this.updatePersonalField(data.field, data.value)
+      },
+      image: '',
+      history: {
+        wisdomTeeth: HistoryOptions.NO,
+        crowns: HistoryOptions.NO,
+        looseTeeth: HistoryOptions.NO,
+        decayingTeeth: HistoryOptions.NO,
+      },
+      goals: GoalOptions.NONE,
+      doctor: {},
+      insurance: {}
     }
   }
 
@@ -34,11 +45,39 @@ export class AppStoreClass {
     }
   }
 
+  nextStep(){
+    this.state.step++
+    this.onUpdate()
+  }
+
+  prevStep(){
+    this.state.step--
+    this.onUpdate()
+  }
+
+  updateImage(file){
+    this.state.image = file
+    this.onUpdate()
+  }
+
   updatePersonalField(fieldname, value){
     let field = Object.assign({}, this.state.personal[fieldname])
     field.value = value
     this.state.personal[fieldname] = InformationValidator.validateField(fieldname, field)
-    console.log(fieldname, field)
+    
+    this.onUpdate()
+  }
+
+  updateHistory(fieldname, value){
+    let history = Object.assign({}, this.state.history)
+    history[fieldname] = value
+    this.state.history = history
+
+    this.onUpdate()
+  }
+
+  updateGoal(value){
+    this.state.goal = value
     this.onUpdate()
   }
 
@@ -47,7 +86,7 @@ export class AppStoreClass {
   }
 
   onUpdate() {
-    window.dispatchEvent(new Event(AppStoreClass.StoreUpdate))
+    window.dispatchEvent(new Event('StoreUpdate'))
   }
 }
 

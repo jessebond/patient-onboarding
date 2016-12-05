@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { Link } from 'react-router'
 import Step from './Step'
 
 class StepDoctor extends Step {
@@ -6,7 +7,7 @@ class StepDoctor extends Step {
 
   renderBody() {
     return <div>
-      <h1>Personal Information</h1>
+      <h1>Doctor</h1>
       <div>
       </div>
     </div>

@@ -1,42 +1,24 @@
 import React, { Component } from 'react'
 import AppStore, {AppStoreClass} from '../store/AppStore'
 
-export const StepConst = {
-  PERSONAL: 0,
-  IMAGE: 1,
-  HISTORY: 2,
-  GOALS: 3,
-  DOCTOR: 4,
-  INSURANCE: 5,
-  SUBMIT: 6
-}
-
 class Step extends Component {
   constructor(props){
     super(props)
-
-    this.onStoreUpdate = this.onStoreUpdate.bind(this)
-    this.state = {
-      data: AppStore.getState()
-    }
-    this.renderBody = this.renderBody.bind(this)
-    this.renderFooter = this.renderFooter.bind(this)
   }
 
-  componentWillMount(){
-    window.addEventListener(AppStoreClass.StoreUpdate, this.onStoreUpdate)
+  handleNextStep() {
+    AppStore.nextStep()
   }
-
-  componentWillUnMount(){
-    window.removeEventListener(AppStoreClass.StoreUpdate, this.onStoreUpdate)
+  handlePrevStep() {
+    AppStore.prevStep()
   }
-
-  onStoreUpdate(){
-    this.setState({data: AppStore.getState()})
-  }
-
   renderBody() { return null }
-  renderFooter() { return null }
+  renderFooter() {
+    return <div>
+      <div onClick={this.handlePrevStep}>Previous Step</div>
+      <div onClick={this.handleNextStep}>Next Step</div>
+    </div>
+  }
 
   render(){
     return <div className="step-wrapper">
