@@ -37,7 +37,7 @@ export class AppStoreClass {
   getDefaultField(){
     return {
       value: '',
-      valid: false,
+      valid: null,
       error: ''
     }
   }
@@ -52,9 +52,37 @@ export class AppStoreClass {
   }
 
   nextStep(){
-    this.state.step++
-    this.onUpdate()
+    let valid = true
+    switch(this.state.step){
+      case Steps.PERSONAL:
+        for(let prop in this.state.personal){
+          valid = valid && this.state.personal[prop].valid
+        }
+        break
+      case Steps.IMAGE:
+        valid = this.state.image !== ''
+        break
+      case Steps.GOALS:
+        valid = this.state.goal !== GoalOptions.NONE
+        break
+      case Steps.DOCTOR:
+        valid = this.state.doctor !== DoctorOptions.NONE
+        break
+      case Steps.INSURANCE:
+        valid = this.state.goal !== InsuranceOptions.NONE
+        break
+      case Steps.HISTORY:
+      default:
+        valid = true
+        break
+    }
+
+    if(valid){
+      this.state.step++
+      this.onUpdate()
+    }
   }
+
 
   prevStep(){
     this.state.step--

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import AppStore from '../../store/AppStore'
+import '../../assets/css/bootstrap.css'
 
 export class TextField extends Component {
   constructor(props){
@@ -16,19 +17,28 @@ export class TextField extends Component {
 
   render(){
     const {placeholder, className, text, field} = this.props
-    const errors = field.error ? <p>{field.error}</p> : null
+    const errors = field.error ? <label className="control-label" style={{marginLeft: "10px"}}>{field.error}</label> : null
     const infos = field.info ? <p>{field.info}</p> : null
-    return <div>
-      <p>{text}</p>
-      <input
-        className={className}
-        type="text"
-        value={field.value}
-        placeholder={placeholder ? placeholder : ''}
-        onChange={this.handleChange}
-      />
-      {errors}
-      {infos}
+    let wrapperClass = "form-group has-feedback"
+    if(field.valid === true){
+      wrapperClass += " has-success"
+    } else if(field.valid === false){
+      wrapperClass += " has-error"
+    }
+
+    return <div className="form-inline col-md-6 spacer" >
+      <div className={wrapperClass}>
+        <p>{text}</p>
+        <input
+          className="form-control"
+          type="text"
+          value={field.value}
+          placeholder={placeholder ? placeholder : ''}
+          onChange={this.handleChange}
+        />
+        {errors}
+        {infos}
+      </div>
     </div>
   }
 }
@@ -44,7 +54,6 @@ export class EmailField extends Component {
       text="Email"
       onUpdate={this.onUpdate}
       placeholder='great@teeth.com'
-      className=''
       field={this.props.field}
     />
   }
@@ -61,7 +70,6 @@ export class PasswordField extends Component {
       text="Password"
       onUpdate={this.onUpdate}
       placeholder='qwerty12'
-      className=''
       field={this.props.field}
     />
   }
@@ -91,7 +99,6 @@ export class DoBField extends Component {
       text="Date of birth"
       onUpdate={this.onUpdate}
       placeholder='MM/DD/YYYY'
-      className=''
       field={this.props.field}
     />
   }
@@ -107,7 +114,6 @@ export class FirstNameField extends Component {
       text="First Name"
       onUpdate={this.onUpdate}
       placeholder='John'
-      className=''
       field={this.props.field}
     />
   }
@@ -123,7 +129,6 @@ export class LastNameField extends Component {
       text="Last Name"
       onUpdate={this.onUpdate}
       placeholder='Smith'
-      className=''
       field={this.props.field}
     />
   }
@@ -139,7 +144,6 @@ export class PhoneNumberField extends Component {
       text="Phone Number"
       onUpdate={this.onUpdate}
       placeholder='555-123-4567'
-      className=''
       field={this.props.field}
     />
   }

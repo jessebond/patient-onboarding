@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
+import './assets/css/bootstrap.css'
 import StepPersonal from './component/StepPersonal'
 import StepDoctor from './component/StepDoctor'
 import StepGoals from './component/StepGoals'
@@ -8,6 +9,8 @@ import StepImage from './component/StepImage'
 import StepInsurance from './component/StepInsurance'
 import StepSubmit from './component/StepSubmit'
 import AppStore, { Steps } from './store/AppStore'
+import ProgressBar from './component/ProgressBar'
+import Footer from './component/Footer'
 
 class App extends Component {
   constructor(props){
@@ -54,11 +57,13 @@ class App extends Component {
 
   render() {
     return (
-      <div className="app">
-        <div className="nav">
+      <div>
+        <div className="navbar navbar-default">
           <h2>CompanyName Patient Signup</h2>
         </div>
+        <ProgressBar step={this.state.step} maxStep={Steps.SUBMIT} />
         {this.renderStep()}
+        <Footer step={this.state.step} />
       </div>
     )
   }

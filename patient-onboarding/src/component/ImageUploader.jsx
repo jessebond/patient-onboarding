@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import AppStore from '../store/AppStore'
+import '../assets/css/bootstrap.css'
 
 export default class ImageUploader extends Component {
   constructor(props){
@@ -31,7 +32,7 @@ export default class ImageUploader extends Component {
 
   render(){
     const {imagePreviewUrl} = this.state
-    const preview = imagePreviewUrl ? <img src={imagePreviewUrl} /> :
+    const preview = imagePreviewUrl ? <img src={imagePreviewUrl} alt="Damn, looking good." className="img-thumbnail profileImage" /> :
       <div>Please select an image</div>
 
     return <div>

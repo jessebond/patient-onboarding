@@ -6,7 +6,9 @@ class StepGoals extends Step {
   renderBody() {
     return <div>
       <h1>Goals</h1>
-      <GoalSelect selected={this.props.data}/>
+      <div className="row">
+        <GoalSelect selected={this.props.data}/>
+      </div>
     </div>
   }
 }

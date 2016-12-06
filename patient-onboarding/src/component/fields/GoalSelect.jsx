@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import AppStore from '../../store/AppStore'
+import minor from '../../assets/image/minor.png'
+import major from '../../assets/image/major.png'
+import moderate from '../../assets/image/moderate.png'
 
 export const GoalOptions = {
   NONE: 0,
@@ -21,20 +24,25 @@ export default class GoalSelection extends Component {
 
   render(){
     const selected = this.props.selected
-    return <ul>
-      <li onClick={this.handleClick.bind(this, GoalOptions.MINOR)}>
-        <img src=""/>
-        <p>Fix minor crowding{}</p>
-      </li>
-      <li onClick={this.handleClick.bind(this, GoalOptions.MODERATE)}>
-        <img src=""/>
-        <p>Fix moderate crowding</p>
-      </li>
-      <li onClick={this.handleClick.bind(this, GoalOptions.MAJOR)}>
-        <img src=""/>
+    const classMajor = "goalImage" + (selected === GoalOptions.MAJOR ? " selected" : "")
+    const classMinor = "goalImage" + (selected === GoalOptions.MINOR ? " selected" : "")
+    const classModerate = "goalImage" + (selected === GoalOptions.MODERATE ? " selected" : "")
+    const info = selected === GoalOptions.NONE ? <h4 className="col-md-12 spacer">Please Select a Goal</h4> : null
+
+    return <div>
+      <div className="col-md-4" onClick={this.handleClick.bind(this, GoalOptions.MINOR)}>
+        <img src={major} className={classMinor}/>
+        <p className="spacer">Fix minor crowding{}</p>
+      </div>
+      <div className="col-md-4" onClick={this.handleClick.bind(this, GoalOptions.MODERATE)}>
+        <img src={major} className={classModerate}/>
+        <p className="spacer">Fix moderate crowding</p>
+      </div>
+      <div className="col-md-4" onClick={this.handleClick.bind(this, GoalOptions.MAJOR)}>
+        <img src={major} className={classMajor}/>
         <p>Fix major crowding</p>
-      </li>
-      <li>{selected}</li>
-    </ul>
+      </div>
+      {info}
+    </div>
   }
 }
