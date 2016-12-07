@@ -49,7 +49,7 @@ class App extends Component {
       case Steps.INSURANCE:
         return <StepInsurance data={this.state.insurance} />
       case Steps.SUBMIT:
-        return <StepSubmit data={null} />
+        return <StepSubmit data={this.state} />
       default:
         return <div>Bad step</div>
     }

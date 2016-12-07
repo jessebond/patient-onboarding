@@ -8,7 +8,7 @@ class StepDoctor extends Step {
   renderBody() {
     return <div>
       <h1>Select Your Doctor</h1>
-      <DoctorSelect selection={this.props.data} />
+      <DoctorSelect selected={this.props.data} />
     </div>
   }
 }

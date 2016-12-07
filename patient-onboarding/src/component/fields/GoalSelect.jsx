@@ -31,16 +31,16 @@ export default class GoalSelection extends Component {
 
     return <div>
       <div className="col-md-4" onClick={this.handleClick.bind(this, GoalOptions.MINOR)}>
-        <img src={major} className={classMinor}/>
+        <img src={minor} className={classMinor}/>
         <p className="spacer">Fix minor crowding{}</p>
       </div>
       <div className="col-md-4" onClick={this.handleClick.bind(this, GoalOptions.MODERATE)}>
-        <img src={major} className={classModerate}/>
+        <img src={moderate} className={classModerate}/>
         <p className="spacer">Fix moderate crowding</p>
       </div>
       <div className="col-md-4" onClick={this.handleClick.bind(this, GoalOptions.MAJOR)}>
         <img src={major} className={classMajor}/>
-        <p>Fix major crowding</p>
+        <p className="spacer">Fix major crowding</p>
       </div>
       {info}
     </div>

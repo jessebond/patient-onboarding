@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import AppStore from '../../store/AppStore'
+import doctor from '../../assets/image/doctor.png'
 
 export const DoctorOptions = {
   NONE: 0,
@@ -22,28 +23,29 @@ export default class DoctorSelection extends Component {
   }
 
   render(){
-    return <ul>
-      <li onClick={this.handleClick.bind(this, DoctorOptions.PERSON)}>
-        <img src=""/>
+    const {selected} = this.props
+
+    return <div>
+      <div className="col-md-2" onClick={this.handleClick.bind(this, DoctorOptions.PERSON)}>
+        <img src={doctor} className={selected === DoctorOptions.PERSON ? "selected" : ""}/>
         <p>{DoctorOptions.PERSON}</p>
-      </li>
-      <li onClick={this.handleClick.bind(this, DoctorOptions.GOOD)}>
-        <img src=""/>
+      </div>
+      <div className="col-md-2" onClick={this.handleClick.bind(this, DoctorOptions.GOOD)}>
+        <img src={doctor} className={selected === DoctorOptions.GOOD ? "selected" : ""}/>
         <p>{DoctorOptions.GOOD}</p>
-      </li>
-      <li onClick={this.handleClick.bind(this, DoctorOptions.BAD)}>
-        <img src=""/>
+      </div>
+      <div className="col-md-2" onClick={this.handleClick.bind(this, DoctorOptions.BAD)}>
+        <img src={doctor} className={selected === DoctorOptions.BAD ? "selected" : ""}/>
         <p>{DoctorOptions.BAD}</p>
-      </li>
-      <li onClick={this.handleClick.bind(this, DoctorOptions.SMILES)}>
-        <img src=""/>
+      </div>
+      <div className="col-md-2" onClick={this.handleClick.bind(this, DoctorOptions.SMILES)}>
+        <img src={doctor} className={selected === DoctorOptions.SMILES ? "selected" : ""}/>
         <p>{DoctorOptions.SMILES}</p>
-      </li>
-      <li onClick={this.handleClick.bind(this, DoctorOptions.FROWNS)}>
-        <img src=""/>
+      </div>
+      <div className="col-md-2" onClick={this.handleClick.bind(this, DoctorOptions.FROWNS)}>
+        <img src={doctor} className={selected === DoctorOptions.FROWNS ? "selected" : ""}/>
         <p>{DoctorOptions.FROWNS}</p>
-      </li>
-      <li>{this.props.selection}</li>
-    </ul>
+      </div>
+    </div>
   }
 }

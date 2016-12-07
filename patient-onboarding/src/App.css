@@ -1,4 +1,4 @@
-.profileImage {
+.profile-image {
   width: 250px;
   height: 250px;
   margin-top: 25px;
@@ -12,6 +12,10 @@
   margin-top: 25px;
 }
 
-.stepWrapper {
+.spacer-left {
+  margin-left: 25px;
+}
+
+.step-wrapper {
   margin: 25px;
 }

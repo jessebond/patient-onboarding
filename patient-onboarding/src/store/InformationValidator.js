@@ -33,13 +33,13 @@ export default class InformationValidator {
 
   static validatePassword(field){
     if(field.value.length < 10){
-      field.error = "Password must be atleast 10 characters"
+      field.error = "Use atleast 10 characters"
       field.info = "Password strength: Weak"
       field.valid = false
       return field
     }
     if(!PASSWORD_REGEX.test(field.value)){
-      field.error = "Password must be atleast 10 characters"
+      field.error = "Use atleast 10 characters"
       field.valid = false
       field.info = "Password strength: Weak"
 
@@ -64,7 +64,7 @@ export default class InformationValidator {
     }
 
     field.valid = false
-    field.error = "Password too weak. Try adding aleast one number or a symbol"
+    field.error = "Try adding one number or symbol"
     field.info = "Password strength: Weak"
     
     return field
@@ -85,11 +85,12 @@ export default class InformationValidator {
       return field
     }
 
-    let dob = new Date(field.value.replace(DOB_REGEX, '$3-$2-$1'));
+    let matches = field.value.match(DOB_REGEX)
+    let dob = new Date(matches[3] + '-' + matches[1] + '-' + matches[2])
     const age = Date.now() - dob.getTime()
     const ageInYears = age / 1000 / 60 / 60 / 24 /365
-    console.log('age', age, ageInYears)
-    if(ageInYears < 18){
+
+    if(ageInYears < 18 || ageInYears > 116){
       field.valid = false
       field.error = 'You must be age 18 or older'
 

@@ -20,7 +20,7 @@ export class AppStoreClass {
       step: Steps.PERSONAL,
       personal: {
         email: this.getDefaultField(),
-        password: this.getDefaultField(),
+        password: this.getDefaultPasswordField(),
         firstName: this.getDefaultField(),
         lastName: this.getDefaultField(),
         dob: this.getDefaultField(),
@@ -42,6 +42,13 @@ export class AppStoreClass {
     }
   }
 
+  getDefaultPasswordField(){
+    let field = this.getDefaultField()
+    field.info = "Password strength: Weak"
+
+    return field
+  }
+
   getDefaultHistory(){
     return HistoryOptions ? {
         wisdomTeeth: HistoryOptions.NO,
@@ -55,9 +62,11 @@ export class AppStoreClass {
     let valid = true
     switch(this.state.step){
       case Steps.PERSONAL:
-        for(let prop in this.state.personal){
-          valid = valid && this.state.personal[prop].valid
-        }
+        let fields = Object.keys(this.state.personal)
+        fields.forEach((field) => {
+          this.updatePersonalField(field, this.state.personal[field].value)
+          valid = valid && this.state.personal[field].valid
+        })
         break
       case Steps.IMAGE:
         valid = this.state.image !== ''
@@ -77,16 +86,19 @@ export class AppStoreClass {
         break
     }
 
-    if(valid){
+    if(valid || true){
       this.state.step++
       this.onUpdate()
     }
   }
 
-
   prevStep(){
     this.state.step--
     this.onUpdate()
+  }
+
+  submit(){
+    alert("POST data!")
   }
 
   updateImage(file){

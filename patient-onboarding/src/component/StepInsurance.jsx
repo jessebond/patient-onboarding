@@ -6,7 +6,7 @@ class StepInsurance extends Step {
   renderBody() {
     return <div>
       <h1>Insurance Information</h1>
-      <InsuranceSelect selection={this.props.data} />
+      <InsuranceSelect selected={this.props.data} />
     </div>
   }
 }

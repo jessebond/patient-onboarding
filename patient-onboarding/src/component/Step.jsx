@@ -11,7 +11,7 @@ class Step extends Component {
   renderBody() { return null }
 
   render(){
-    return <div className="stepWrapper">
+    return <div className="step-wrapper">
       <div className="container">
         {this.renderBody()}
       </div>

@@ -31,7 +31,7 @@ export class TextField extends Component {
         <p>{text}</p>
         <input
           className="form-control"
-          type="text"
+          type={this.props.isPassword ? "password" : "text"}
           value={field.value}
           placeholder={placeholder ? placeholder : ''}
           onChange={this.handleChange}
@@ -71,6 +71,7 @@ export class PasswordField extends Component {
       onUpdate={this.onUpdate}
       placeholder='qwerty12'
       field={this.props.field}
+      isPassword
     />
   }
 }
